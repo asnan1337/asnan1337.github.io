@@ -37,32 +37,23 @@ header h1 {
   margin: 0 auto 20px;
 }
 
-#code {
-  background-color: #f9f9f9;
+#projects {
+  background-color: #fff;
   padding: 40px 0;
 }
 
-#code-display {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  height: 300px;
+#projects h2 {
+  text-align: center;
 }
 
-#code-display code {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  animation: code-animation 10s infinite;
+.project {
+  margin-bottom: 20px;
 }
 
-@keyframes code-animation {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+.project h3 {
+  margin: 0;
+}
+
+.project p {
+  margin-top: 10px;
 }
