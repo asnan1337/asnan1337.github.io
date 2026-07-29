@@ -9,15 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #101215;
-    --panel: #171a1f;
-    --panel-2: #1c2027;
-    --line: #2a2e35;
-    --text: #edeae3;
-    --muted: #8b9099;
-    --gold: #c9a24b;
-    --teal: #4fd1c5;
-    --ok: #4ade80;
+    --bg: #f8f9fa;
+    --panel: #ffffff;
+    --panel-2: #f1f3f5;
+    --line: #e9ecef;
+    --line-accent: #ced4da;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #0f172a;
+    --gold: #d97706;
+    --teal: #0d9488;
+    --ok: #16a34a;
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -36,7 +38,7 @@
   }
   a{ color: inherit; }
 
-  ::selection{ background: var(--gold); color: #14161a; }
+  ::selection{ background: var(--text); color: var(--bg); }
 
   /* ---------- background canvas animation ---------- */
   #bg-canvas {
@@ -46,7 +48,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    pointer-events: none; /* Supaya klik tidak terhalang canvas */
+    pointer-events: none;
   }
 
   /* ---------- top status bar ---------- */
@@ -55,7 +57,7 @@
     display:flex; align-items:center; justify-content:space-between;
     gap: 12px;
     padding: 10px 20px;
-    background: rgba(16,18,21,0.85);
+    background: rgba(248, 249, 250, 0.85);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     font-family: var(--font-mono);
@@ -66,7 +68,7 @@
   .statusbar .dot{
     display:inline-block; width:7px; height:7px; border-radius:50%;
     background: var(--ok); margin-right:7px;
-    box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
     animation: pulse 2.2s ease-in-out infinite;
   }
   @keyframes pulse{
@@ -87,7 +89,7 @@
     left: 20px;
     top: 0; bottom: 0;
     width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--line) 4%, var(--line) 96%, transparent);
+    background: linear-gradient(to bottom, transparent, var(--line-accent) 4%, var(--line-accent) 96%, transparent);
   }
   @media (max-width: 720px){ .chain{ display:none; } }
 
@@ -105,7 +107,7 @@
     position:absolute; left: 20px; top: 84px;
     width: 11px; height: 11px; border-radius:50%;
     background: var(--bg);
-    border: 2px solid var(--teal);
+    border: 2px solid var(--accent);
     transform: translateX(-50%);
   }
   @media (max-width: 720px){ .block-node{ display:none; } }
@@ -117,6 +119,7 @@
     color: var(--teal);
     letter-spacing: 0.05em;
     margin-bottom: 14px;
+    font-weight: 600;
   }
   .block-hash::before{ content: "▮ "; color: var(--muted); }
 
@@ -143,16 +146,15 @@
   }
   .avatar-frame .ring{
     position: absolute; inset: -8px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
     border-radius: 50%;
   }
   .avatar-frame .ring::before{
     content:"";
     position:absolute; top:-2px; left: 50%;
     width:6px; height:6px; border-radius:50%;
-    background: var(--teal);
+    background: var(--accent);
     transform: translateX(-50%);
-    box-shadow: 0 0 0 3px rgba(79,209,197,0.15);
   }
   .avatar-frame img{
     width:100%; height:100%;
@@ -160,7 +162,7 @@
     object-fit: cover;
     display:block;
     background: var(--panel);
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
   }
   .avatar-frame .avatar-tag{
     position:absolute; bottom:-10px; left:50%;
@@ -171,7 +173,7 @@
     color: var(--muted);
     background: var(--bg);
     padding: 2px 8px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
     border-radius: 999px;
     white-space: nowrap;
   }
@@ -196,14 +198,14 @@
   }
   .role-tags span{
     padding: 6px 12px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
     border-radius: 999px;
     color: var(--muted);
-    background: rgba(23, 26, 31, 0.6);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(4px);
   }
-  .role-tags span.gold{ color: var(--gold); border-color: rgba(201,162,75,0.35); }
-  .role-tags span.teal{ color: var(--teal); border-color: rgba(79,209,197,0.35); }
+  .role-tags span.gold{ color: var(--gold); border-color: rgba(217, 119, 6, 0.35); }
+  .role-tags span.teal{ color: var(--teal); border-color: rgba(13, 148, 136, 0.35); }
 
   .hero p.lede{ font-size: 17px; }
 
@@ -218,25 +220,24 @@
     display:inline-block;
     transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
-  .btn-primary{ background: var(--gold); color: #14161a; font-weight: 600; }
-  .btn-primary:hover{ transform: translateY(-2px); }
-  .btn-ghost{ border: 1px solid var(--line); color: var(--text); background: rgba(23,26,31,0.5); backdrop-filter: blur(4px); }
-  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
-  .btn:focus-visible{ outline: 2px solid var(--teal); outline-offset: 3px; }
+  .btn-primary{ background: var(--text); color: var(--bg); font-weight: 600; }
+  .btn-primary:hover{ transform: translateY(-2px); background: #000; }
+  .btn-ghost{ border: 1px solid var(--line-accent); color: var(--text); background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px); }
+  .btn-ghost:hover{ border-color: var(--accent); transform: translateY(-2px); }
 
   .readout{
     margin-top: 44px;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
+    background: var(--line-accent);
+    border: 1px solid var(--line-accent);
     border-radius: 8px;
     overflow: hidden;
     max-width: 620px;
   }
   .readout div{
-    background: rgba(23, 26, 31, 0.85);
+    background: rgba(255, 255, 255, 0.85);
     padding: 16px 18px;
     backdrop-filter: blur(4px);
   }
@@ -251,6 +252,7 @@
     font-family: var(--font-mono);
     font-size: 14px;
     color: var(--text);
+    font-weight: 500;
   }
   @media (max-width: 560px){
     .readout{ grid-template-columns: 1fr; }
@@ -260,7 +262,7 @@
   .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
   @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }
   .about-grid p{ color: var(--muted); margin: 0 0 14px; }
-  .about-grid p strong{ color: var(--text); font-weight: 500; }
+  .about-grid p strong{ color: var(--text); font-weight: 600; }
   .fact-list{ list-style:none; margin:0; padding:0; border-top: 1px solid var(--line); }
   .fact-list li{
     display:flex; justify-content: space-between; gap: 12px;
@@ -277,22 +279,22 @@
     color: var(--muted);
     letter-spacing: 0.08em;
     margin: 0 0 12px;
-    font-weight: 500;
+    font-weight: 600;
   }
   .tag-row{ display:flex; flex-wrap: wrap; gap: 9px; }
   .tag{
     font-family: var(--font-mono);
     font-size: 12.5px;
     padding: 7px 12px;
-    background: rgba(23, 26, 31, 0.8);
-    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--line-accent);
     border-radius: 5px;
     color: var(--text);
     backdrop-filter: blur(4px);
   }
 
   /* ---------- explorer table ---------- */
-  .table-wrap{ overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: rgba(23, 26, 31, 0.6); backdrop-filter: blur(4px); }
+  .table-wrap{ overflow-x: auto; border: 1px solid var(--line-accent); border-radius: 8px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); }
   table{ width: 100%; border-collapse: collapse; min-width: 640px; font-size: 13.5px; }
   thead th{
     text-align: left;
@@ -300,10 +302,10 @@
     font-size: 10.5px;
     letter-spacing: 0.07em;
     color: var(--muted);
-    font-weight: 500;
+    font-weight: 600;
     padding: 14px 18px;
     background: var(--panel-2);
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-accent);
   }
   tbody td{
     padding: 16px 18px;
@@ -311,7 +313,7 @@
     color: var(--text);
   }
   tbody tr:last-child td{ border-bottom: none; }
-  tbody tr:hover{ background: rgba(23, 26, 31, 0.9); }
+  tbody tr:hover{ background: rgba(255, 255, 255, 0.95); }
   .cell-muted{ color: var(--muted); }
   .pill{
     font-family: var(--font-mono);
@@ -322,21 +324,22 @@
     align-items: center;
     gap: 6px;
     white-space: nowrap;
+    font-weight: 500;
   }
   .pill::before{ content:""; width:6px; height:6px; border-radius:50%; }
-  .pill.live{ color: var(--ok); background: rgba(74,222,128,0.1); }
+  .pill.live{ color: var(--ok); background: rgba(22, 163, 74, 0.1); }
   .pill.live::before{ background: var(--ok); }
-  .pill.claimed{ color: var(--gold); background: rgba(201,162,75,0.12); }
+  .pill.claimed{ color: var(--gold); background: rgba(217, 119, 6, 0.1); }
   .pill.claimed::before{ background: var(--gold); }
-  .pill.active{ color: var(--teal); background: rgba(79,209,197,0.1); }
+  .pill.active{ color: var(--teal); background: rgba(13, 148, 136, 0.1); }
   .pill.active::before{ background: var(--teal); }
 
   /* ---------- thesis cards ---------- */
   .thesis-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 8px; }
   @media (max-width: 700px){ .thesis-grid{ grid-template-columns: 1fr; } }
   .thesis-card{
-    background: rgba(23, 26, 31, 0.8);
-    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--line-accent);
     border-radius: 8px;
     padding: 22px 24px;
     backdrop-filter: blur(4px);
@@ -347,6 +350,7 @@
     color: var(--gold);
     display:block;
     margin-bottom: 10px;
+    font-weight: 600;
   }
   .thesis-card h3{
     font-family: var(--font-display);
@@ -361,15 +365,15 @@
   @media (max-width: 900px){ .project-grid{ grid-template-columns: 1fr 1fr; } }
   @media (max-width: 620px){ .project-grid{ grid-template-columns: 1fr; } }
   .project-card{
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
     border-radius: 8px;
     padding: 22px 22px 24px;
-    background: rgba(23, 26, 31, 0.8);
+    background: rgba(255, 255, 255, 0.75);
     display:flex; flex-direction: column;
-    transition: border-color .15s ease;
+    transition: border-color .15s ease, transform .15s ease;
     backdrop-filter: blur(4px);
   }
-  .project-card:hover{ border-color: var(--teal); }
+  .project-card:hover{ border-color: var(--text); transform: translateY(-2px); }
   .project-card h3{
     font-family: var(--font-display);
     font-size: 17px;
@@ -384,16 +388,16 @@
   .contact-grid{ display:flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
   .contact-card{
     flex: 1 1 200px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-accent);
     border-radius: 8px;
     padding: 18px 20px;
     text-decoration: none;
     color: var(--text);
-    background: rgba(23, 26, 31, 0.8);
+    background: rgba(255, 255, 255, 0.75);
     transition: border-color .15s ease, transform .15s ease;
     backdrop-filter: blur(4px);
   }
-  .contact-card:hover{ border-color: var(--gold); transform: translateY(-2px); }
+  .contact-card:hover{ border-color: var(--text); transform: translateY(-2px); }
   .contact-card .label{
     font-family: var(--font-mono);
     font-size: 10.5px;
@@ -402,7 +406,7 @@
     display:block;
     margin-bottom: 8px;
   }
-  .contact-card .value{ font-size: 14.5px; font-weight: 500; }
+  .contact-card .value{ font-size: 14.5px; font-weight: 600; }
 
   footer{
     text-align: center;
@@ -423,7 +427,7 @@
 </head>
 <body>
 
-  <!-- Canvas Animasi Background -->
+  <!-- Canvas Animasi Network Light -->
   <canvas id="bg-canvas"></canvas>
 
   <div class="statusbar">
@@ -672,28 +676,36 @@
   </footer>
 
 <script>
-  // ---------- Animasi Network Paradigm.xyz ----------
+  // ---------- Animasi Canvas Light Mode ----------
   (function(){
     const canvas = document.getElementById('bg-canvas');
+    if(!canvas) return;
     const ctx = canvas.getContext('2d');
     
     let width, height;
     let particles = [];
-    
-    function resize(){
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+    let mouse = { x: null, y: null, radius: 200 };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
 
     class Particle {
       constructor(){
+        this.reset();
+      }
+      reset(){
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 1.5 + 1;
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.radius = Math.random() * 1.5 + 1.2;
       }
       update(){
         this.x += this.vx;
@@ -705,16 +717,27 @@
       draw(){
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(79, 209, 197, 0.35)'; // teal halus
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.4)'; // Gelap halus untuk light mode
         ctx.fill();
       }
     }
 
-    // Jumlah titik disesuaikan dengan luas layar
-    const particleCount = Math.floor((width * height) / 18000);
-    for(let i = 0; i < particleCount; i++){
-      particles.push(new Particle());
+    function initParticles(){
+      particles = [];
+      const count = Math.max(35, Math.floor((width * height) / 11000));
+      for(let i = 0; i < count; i++){
+        particles.push(new Particle());
+      }
     }
+
+    function resize(){
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
 
     function animate(){
       ctx.clearRect(0, 0, width, height);
@@ -723,24 +746,41 @@
         particles[i].update();
         particles[i].draw();
 
+        // Jaringan antar partikel
         for(let j = i + 1; j < particles.length; j++){
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          // Hubungkan garis jika jarak antar titik cukup dekat
           if(dist < 140){
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(79, 209, 197, ${0.12 * (1 - dist / 140)})`;
+            ctx.strokeStyle = `rgba(15, 23, 42, ${0.15 * (1 - dist / 140)})`;
             ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        // Interaksi kursor mouse
+        if (mouse.x !== null && mouse.y !== null) {
+          const mdx = particles[i].x - mouse.x;
+          const mdy = particles[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+          if (mdist < mouse.radius) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(13, 148, 136, ${0.35 * (1 - mdist / mouse.radius)})`;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
       requestAnimationFrame(animate);
     }
+
     animate();
   })();
 
