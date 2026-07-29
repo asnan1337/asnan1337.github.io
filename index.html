@@ -1,228 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asnan Akira Webpage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #101215;
+    --panel: #171a1f;
+    --panel-2: #1c2027;
+    --line: #2a2e35;
+    --text: #edeae3;
+    --muted: #8b9099;
+    --gold: #c9a24b;
+    --teal: #4fd1c5;
+    --ok: #4ade80;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
 
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Owned by 0xasnan</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta property="og:title" content="Pwnedz by 0xasnan">
-    <meta name="keywords" content="0xasnan">
-    <meta name="description" content="Whoopz your system gott pwnedz!!">
-    <meta property="og:description" content="Whoopz your system gott pwnedz!!">
-    <meta property="og:site_name" content="Pwnedz by 0xasnan">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://i.ibb.co/s2TD4HB/1624757707-picsay.png">
-    <meta name="copyright"content="0xasnan">
-    <meta name="theme-color" content="#000">
-    <meta name="robots" content="index, cache, follow, archive">
-    <meta name="googlebot" content="all, index, follow, cache, archive">
-    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy_F44jQXUzuUs79Pt3O4nyOlW5ccAdvEHwQ&usqp=CAU" type="image/jpg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    </head>
+  ::selection{ background: var(--gold); color: #14161a; }
+
+  /* ---------- top status bar ---------- */
+  .statusbar{
+    position: sticky; top:0; z-index: 50;
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 12px;
+    padding: 10px 20px;
+    background: rgba(16,18,21,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .statusbar .dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background: var(--ok); margin-right:7px;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; } 50%{ opacity:.4; }
+  }
+  .statusbar-left{ display:flex; align-items:center; }
+  .statusbar-right{ display:flex; gap:18px; }
+  .statusbar-right span b{ color: var(--text); font-weight:500; }
+  @media (max-width: 720px){
+    .statusbar-right{ display:none; }
+  }
+
+  /* ---------- shell / chain rail ---------- */
+  .shell{ max-width: 1080px; margin: 0 auto; padding: 0 20px; position: relative; }
+
+  .chain{
+    position: absolute;
+    left: 20px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--line) 4%, var(--line) 96%, transparent);
+  }
+  @media (max-width: 720px){ .chain{ display:none; } }
+
+  section{
+    position: relative;
+    padding: 78px 0 78px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type{ border-bottom: none; }
+  @media (max-width: 720px){
+    section{ padding-left: 0; }
+  }
+
+  .block-node{
+    position:absolute; left: 20px; top: 84px;
+    width: 11px; height: 11px; border-radius:50%;
+    background: var(--bg);
+    border: 2px solid var(--teal);
+    transform: translateX(-50%);
+  }
+  @media (max-width: 720px){ .block-node{ display:none; } }
+
+  .block-hash{
+    display:inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .block-hash::before{ content: "▮ "; color: var(--muted); }
+
+  h2{
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .lede{ color: var(--muted); max-width: 640px; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding-top: 56px; }
+  .hero-top{ display:flex; align-items:flex-start; justify-content: space-between; gap: 40px; }
+  .hero-copy{ flex: 1 1 auto; min-width: 0; }
+  .hero .block-hash{ margin-bottom: 22px; }
+
+  .avatar-frame{
+    flex: 0 0 auto;
+    position: relative;
+    width: 148px; height: 148px;
+  }
+  .avatar-frame .ring{
+    position: absolute; inset: -8px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+  .avatar-frame .ring::before{
+    content:"";
+    position:absolute; top:-2px; left: 50%;
+    width:6px; height:6px; border-radius:50%;
+    background: var(--teal);
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 3px rgba(79,209,197,0.15);
+  }
+  .avatar-frame img{
+    width:100%; height:100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display:block;
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .avatar-frame .avatar-tag{
+    position:absolute; bottom:-10px; left:50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  @media (max-width: 640px){
+    .hero-top{ flex-direction: column-reverse; align-items: flex-start; }
+    .avatar-frame{ width: 104px; height: 104px; margin-bottom: 8px; }
+  }
+  .hero h1{
+    font-family: var(--font-display);
+    font-size: clamp(38px, 7vw, 68px);
+    line-height: 1.02;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+  .role-tags{
+    display:flex; flex-wrap:wrap; gap: 10px;
+    margin: 20px 0 26px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  .role-tags span{
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+  }
+  .role-tags span.gold{ color: var(--gold); border-color: rgba(201,162,75,0.35); }
+  .role-tags span.teal{ color: var(--teal); border-color: rgba(79,209,197,0.35); }
+
+  .hero p.lede{ font-size: 17px; }
+
+  .cta-row{ display:flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+  .btn{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    padding: 13px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    display:inline-block;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{ background: var(--gold); color: #14161a; font-weight: 600; }
+  .btn-primary:hover{ transform: translateY(-2px); }
+  .btn-ghost{ border: 1px solid var(--line); color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+  .btn:focus-visible{ outline: 2px solid var(--teal); outline-offset: 3px; }
+
+  .readout{
+    margin-top: 44px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 620px;
+  }
+  .readout div{
+    background: var(--panel);
+    padding: 16px 18px;
+  }
+  .readout .label{
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    display:block; margin-bottom: 6px;
+  }
+  .readout .value{
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text);
+  }
+  @media (max-width: 560px){
+    .readout{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+  @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-grid p{ color: var(--muted); margin: 0 0 14px; }
+  .about-grid p strong{ color: var(--text); font-weight: 500; }
+  .fact-list{ list-style:none; margin:0; padding:0; border-top: 1px solid var(--line); }
+  .fact-list li{
+    display:flex; justify-content: space-between; gap: 12px;
+    padding: 13px 0; border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .fact-list li span:first-child{ color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+
+  /* ---------- stack / tags ---------- */
+  .stack-group{ margin-bottom: 26px; }
+  .stack-group h4{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+  .tag-row{ display:flex; flex-wrap: wrap; gap: 9px; }
+  .tag{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    padding: 7px 12px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    color: var(--text);
+  }
+
+  /* ---------- explorer table ---------- */
+  .table-wrap{ overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  table{ width: 100%; border-collapse: collapse; min-width: 640px; font-size: 13.5px; }
+  thead th{
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 14px 18px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--line);
+  }
+  tbody td{
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+  }
+  tbody tr:last-child td{ border-bottom: none; }
+  tbody tr:hover{ background: var(--panel); }
+  .cell-muted{ color: var(--muted); }
+  .pill{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .pill::before{ content:""; width:6px; height:6px; border-radius:50%; }
+  .pill.live{ color: var(--ok); background: rgba(74,222,128,0.1); }
+  .pill.live::before{ background: var(--ok); }
+  .pill.claimed{ color: var(--gold); background: rgba(201,162,75,0.12); }
+  .pill.claimed::before{ background: var(--gold); }
+  .pill.active{ color: var(--teal); background: rgba(79,209,197,0.1); }
+  .pill.active::before{ background: var(--teal); }
+
+  /* ---------- thesis cards ---------- */
+  .thesis-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 8px; }
+  @media (max-width: 700px){ .thesis-grid{ grid-template-columns: 1fr; } }
+  .thesis-card{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 24px;
+  }
+  .thesis-card .index{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gold);
+    display:block;
+    margin-bottom: 10px;
+  }
+  .thesis-card h3{
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .thesis-card p{ color: var(--muted); font-size: 14px; margin: 0; }
+
+  /* ---------- projects ---------- */
+  .project-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 900px){ .project-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px){ .project-grid{ grid-template-columns: 1fr; } }
+  .project-card{
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 22px 24px;
+    background: var(--panel);
+    display:flex; flex-direction: column;
+    transition: border-color .15s ease;
+  }
+  .project-card:hover{ border-color: var(--teal); }
+  .project-card h3{
+    font-family: var(--font-display);
+    font-size: 17px;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .project-card p{ color: var(--muted); font-size: 13.5px; margin: 0 0 16px; flex-grow: 1; }
+  .project-card .tag-row{ margin-top: auto; }
+  .project-card .tag{ font-size: 11px; padding: 5px 9px; }
+
+  /* ---------- contact / final block ---------- */
+  .contact-grid{ display:flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+  .contact-card{
+    flex: 1 1 200px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .contact-card:hover{ border-color: var(--gold); transform: translateY(-2px); }
+  .contact-card .label{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    display:block;
+    margin-bottom: 8px;
+  }
+  .contact-card .value{ font-size: 14.5px; font-weight: 500; }
+
+  footer{
+    text-align: center;
+    padding: 40px 20px 50px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
 <body>
-  <section id="four-oh-four">
-  <img class="bg"/>
-  <div id="error-container">
-    <div class="overlay"></div>
-    <div class="terminal">
-      <div class="window-title">
-        <div class="win-buttons">
-          <a id="close" class="button" href="#"></a>
-          <a id="min" class="button" href="#"></a>
-          <a id="max" class="button" href="#"></a>
-        </div>
-        <span class="title"></span></div>
-      <div class="message">
-        <span class='prompt'><span class='user'>asnan</span><span class="at">@</span><span class="path">phantom</span>~<span class="caret">$</span> </span>
-        <span class="typed"></span>
-        <form>><span class="caret">$</span>&nbsp;
-          <input type="text" name="response"></input>
-        </form>
-      </div>
+
+  <div class="statusbar">
+    <div class="statusbar-left"><span class="dot"></span>JARINGAN: ONLINE</div>
+    <div class="statusbar-right">
+      <span>NODE: <b>JAKARTA, ID</b></span>
+      <span>WAKTU LOKAL: <b id="clock">--:--:--</b></span>
+      <span>UPTIME KARIER: <b id="uptime">—</b></span>
     </div>
   </div>
-</section>
 
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Source+Code+Pro:400,500,600,700' type='text/css' media='screen'/>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js'></script>
+  <div class="shell">
+    <div class="chain" aria-hidden="true"></div>
 
-<style>
-#four-oh-four img.bg {
-  -webkit-filter: grayscale(55%);
-          filter: grayscale(55%);
-  position: fixed;
-  background-image: url();
-  background-color: #333333;
-  background-position: center center;
-  background-size: 100% 100%;
-  width: 100%;
-  height: 100%;
-  top: 0; bottom: 0; left: 0; right:0;
-  z-index: -999;
-}
-#four-oh-four #error-container .overlay {
-  position: absolute;
-  background-color: #000;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  opacity: 0.3;
-}
-#four-oh-four .terminal {
-  position: relative;
-  background: rgba(38, 38, 38, 0.8);
-  width: 80%;
-  height: 40vh;
-  border-radius: 8px;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
-  margin: 20vh auto;
-}
-#four-oh-four .terminal .window-title {
-  background: linear-gradient(top, #dedede, #c0c0c0);
-  width: calc(100% - 16px);
-  height: 8%;
-  text-align: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  padding: 1px 8px;
-}
-#four-oh-four .terminal .window-title .win-buttons {
-  position: relative;
-  width: 15%;
-  left: -11px;
-  float: left;
-  margin: 0;
-}
-#four-oh-four .terminal .window-title .button {
-  display: inline-block;
-  text-align: center;
-  width: 10px;
-  height: 10px;
-  border: 0.5px solid;
-  border-radius: 100px;
-  vertical-align: middle;
-  margin: 3px 2px 3px 0;
-}
-#four-oh-four .terminal .window-title #close {
-  background: #e25544;
-  border-color: #d84b3a;
-}
-#four-oh-four .terminal .window-title #min {
-  background: #f5b640;
-  border-color: #e0a12b;
-}
-#four-oh-four .terminal .window-title #max {
-  background: #7cb058;
-  border-color: #6fa44b;
-}
-#four-oh-four .terminal .title {
-  position: relative;
-  display: inline-block;
-  color: #ffffff;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-align: center;
-  vertical-align: middle;
-  top: 0.5px;
-  left: -43px;
-}
-#four-oh-four .terminal .prompt {
-  font-size: 98%;
-}
-#four-oh-four .terminal .user {
-  color: #ea7e7d;
-  letter-spacing: 0.002em;
-  padding-right: 3px;
-}
-#four-oh-four .terminal .at {
-  color: #e8d880;
-  padding-right: 2px;
-}
-#four-oh-four .terminal .path {
-  color: #7ecdcb;
-  letter-spacing: 0.002em;
-  padding-right: 2px;
-}
-#four-oh-four .terminal .caret {
-  color: #50cd70;
-}
-#four-oh-four .message {
-  position: relative;
-  color: rgba(255, 255, 255, 0.75);
-  font-family: "Source Code Pro", monospace;
-  width: 95%;
-  margin: auto;
-  padding: 1.5vh 0 0;
-  z-index: 999;
-}
-#four-oh-four .message span {
-  font-size: 90%;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: 0.045em;
-  margin-bottom: 1em;
-}
-#four-oh-four .message span a {
-  font-family: "Source Code Pro", monospace;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.75);
-}
-#four-oh-four .message form input {
-  background: transparent;
-  border: none;
-  outline: none;
-  caret-color: #50cd70;
-}
-#four-oh-four .message form input:focus {
-  color: rgba(255, 255, 255, 0.75);
-}
-#four-oh-four .message .typed-cursor {
-  color: rgba(255, 255, 255, 0.9);
-}
-#four-oh-four a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-}
-#four-oh-four a:hover {
-  color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.9);
-}
+    <!-- GENESIS BLOCK -->
+    <section class="hero" id="top">
+      <div class="hero-top">
+        <div class="hero-copy">
+          <span class="block-hash">GENESIS · #0x00</span>
+          <h1>Asnan<br>Akira</h1>
+        </div>
 
-</style>
+        <!-- FOTO PROFIL: ganti bagian src="data:image/svg+xml..." di bawah ini
+             dengan foto asli, misalnya src="foto-saya.jpg" -->
+        <div class="avatar-frame">
+          <div class="ring" aria-hidden="true"></div>
+          <img src="/asnan.jpg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231c2027'/%3E%3Ctext x='100' y='114' font-family='JetBrains Mono, monospace' font-size='60' fill='%234fd1c5' text-anchor='middle'%3EAP%3C/text%3E%3C/svg%3E" alt="Foto profil Asnan Pamungkas">
+        </div>
+      </div>
+      <div class="role-tags">
+        <span class="teal">AIRDROP HUNTER</span>
+        <span class="teal">TESTNET PARTICIPANT</span>
+        <span>DEVELOPER / PROGRAMMER</span>
+        <span class="gold">INVESTOR</span>
+      </div>
+      <p class="lede">Membangun software, menguji jaringan yang belum live, dan menempatkan modal di infrastruktur Web3 sejak tahap paling awal — dari testnet, whitepaper, sampai mainnet.</p>
 
-<script type="text/javascript">
-$(function() {
-  $(".typed").typed({
-    strings: [
-      "iam sad ~_ <br/>" + 
-      "~<span class='caret'>$</span> semenjak itu, aku pun baru sadar <br/> ^1" +
-      "~<span class='caret'>$</span> engkaulah segalanya bagi ku <br/> ^500" +
-      "~<span class='caret'>$</span> dan sekarang, dirimu tak mengenaliku lagi !! <br/> ^1000" +
-      "~<span class='caret'>$</span> dan jika kau membaca ini, aku berharap kau bisa untuk memberi kesempatan lagi <br/> ^1000" +
-      "~<span class='caret'>$</span> dan tak kan ku sia2kan kesempatan itu :) <a href='#'></a>"
-    ],
-    showCursor: true,
-    cursorChar: '_',
-    autoInsertCss: true,
-    typeSpeed: 1,
-    startDelay: 200,
-    loop: false,
-    showCursor: false,
-    onStart: $('.message form').hide(),
-    onStop: $('.message form').show(),
-    onTypingResumed: $('.message form').hide(),
-    onTypingPaused: $('.message form').show(),
-    onComplete: $('.message form').show(),
-    onStringTyped: $('.message form').show()
-  });
-  $('.message form').hide()
-});
+      <div class="cta-row">
+        <a class="btn btn-primary" href="mailto:asnan.pamungkas@email.com">Hubungi Saya</a>
+        <a class="btn btn-ghost" href="#aktivitas">Lihat Aktivitas Testnet</a>
+        <a class="btn btn-ghost" href="#proyek">Lihat Proyek</a>
+      </div>
+
+      <div class="readout">
+        <div><span class="label">PERAN</span><span class="value">Full-stack &amp; Web3 Dev</span></div>
+        <div><span class="label">FOKUS</span><span class="value">Testnet · Airdrop · Riset</span></div>
+        <div><span class="label">BASIS</span><span class="value">Indonesia (Remote)</span></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="tentang">
+      <span class="block-hash">BLOCK #0x01 · TENTANG SAYA</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Dari kode ke rantai blok</h2>
+      <div class="about-grid">
+        <div>
+          <p>Saya memulai sebagai <strong>developer software</strong>, membangun aplikasi web dan automasi backend. Ketertarikan pada teknologi terdesentralisasi membawa saya masuk ke ekosistem <strong>Web3</strong> — awalnya sebagai pengguna testnet, lalu berkembang menjadi kontributor aktif di berbagai jaringan baru.</p>
+          <p>Hari ini saya menjalankan tiga peran yang saling menopang: <strong>berburu airdrop &amp; testnet</strong> untuk memahami protokol sejak fase paling awal, <strong>membangun tools</strong> yang mempermudah proses itu sendiri, dan <strong>berinvestasi</strong> berdasarkan riset langsung dari pengalaman on-chain, bukan sekadar mengikuti tren.</p>
+          <p>Pendekatan saya konsisten: pelajari mekanisme sebelum ikut serta, catat setiap interaksi seperti mencatat transaksi, dan perlakukan setiap proyek baru sebagai riset — bukan sekadar peluang cuan.</p>
+        </div>
+        <ul class="fact-list">
+          <li><span>BAHASA</span><span>Indonesia, Inggris</span></li>
+          <li><span>SPESIALISASI</span><span>Web3 &amp; automasi backend</span></li>
+          <li><span>METODE INVESTASI</span><span>Riset fundamental + on-chain</span></li>
+          <li><span>ALAT UTAMA</span><span>VPS, scripting, wallet multisig</span></li>
+          <li><span>STATUS</span><span>Terbuka untuk kolaborasi</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack">
+      <span class="block-hash">BLOCK #0x02 · STACK TEKNIS</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Tools yang saya jalankan</h2>
+      <p class="lede" style="margin-bottom: 32px;">Kombinasi software engineering klasik dengan tooling khas Web3 — dipakai untuk membangun produk sekaligus menjalankan operasional testnet secara efisien.</p>
+
+      <div class="stack-group">
+        <h4>BAHASA &amp; FRAMEWORK</h4>
+        <div class="tag-row">
+          <span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Python</span>
+          <span class="tag">Solidity</span><span class="tag">Node.js</span><span class="tag">React</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>WEB3 &amp; ON-CHAIN</h4>
+        <div class="tag-row">
+          <span class="tag">Ethers.js</span><span class="tag">Hardhat</span><span class="tag">Foundry</span>
+          <span class="tag">The Graph</span><span class="tag">Wallet Multisig</span><span class="tag">RPC Node</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>INFRASTRUKTUR &amp; OPERASIONAL</h4>
+        <div class="tag-row">
+          <span class="tag">Linux VPS</span><span class="tag">Docker</span><span class="tag">Git</span>
+          <span class="tag">Cron / Automasi Task</span><span class="tag">Google Sheets Tracking</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- AIRDROP / TESTNET ACTIVITY -->
+    <section id="aktivitas">
+      <span class="block-hash">BLOCK #0x03 · AKTIVITAS TESTNET &amp; AIRDROP</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Log partisipasi jaringan</h2>
+      <p class="lede" style="margin-bottom: 28px;">Sebagian ekosistem yang saya ikuti sejak fase testnet — mulai dari menjalankan node, interaksi rutin, hingga proses klaim.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ekosistem</th>
+              <th>Jenis Aktivitas</th>
+              <th>Peran</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>zkSync Era</td>
+              <td class="cell-muted">Deploy kontrak, transaksi rutin</td>
+              <td class="cell-muted">Testnet → Mainnet</td>
+              <td><span class="pill live">Mainnet Live</span></td>
+            </tr>
+            <tr>
+              <td>LayerZero</td>
+              <td class="cell-muted">Bridging &amp; cross-chain messaging</td>
+              <td class="cell-muted">Early user</td>
+              <td><span class="pill claimed">Airdrop Diterima</span></td>
+            </tr>
+            <tr>
+              <td>Berachain</td>
+              <td class="cell-muted">Faucet loop, liquidity testing</td>
+              <td class="cell-muted">Testnet participant</td>
+              <td><span class="pill active">Testnet Aktif</span></td>
+            </tr>
+            <tr>
+              <td>Monad</td>
+              <td class="cell-muted">Stress-test transaksi jaringan</td>
+              <td class="cell-muted">Testnet participant</td>
+              <td><span class="pill active">Testnet Aktif</span></td>
+            </tr>
+            <tr>
+              <td>EigenLayer</td>
+              <td class="cell-muted">Operator delegation, restaking</td>
+              <td class="cell-muted">Delegator</td>
+              <td><span class="pill active">Poin Terkumpul</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- INVESTMENT THESIS -->
+    <section id="investasi">
+      <span class="block-hash">BLOCK #0x04 · TESIS INVESTASI</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Cara saya menempatkan modal</h2>
+      <p class="lede" style="margin-bottom: 8px;">Investasi saya dibangun dari pengalaman langsung menggunakan protokol — bukan sekadar membaca whitepaper. Empat area yang saya perhatikan:</p>
+
+      <div class="thesis-grid">
+        <div class="thesis-card">
+          <span class="index">01 — INFRASTRUKTUR</span>
+          <h3>Layer 1 &amp; Layer 2</h3>
+          <p>Jaringan dasar dengan throughput tinggi dan biaya rendah, dinilai dari performa nyata saat testnet — bukan hanya klaim marketing.</p>
+        </div>
+        <div class="thesis-card">
+          <span class="index">02 — KEAMANAN EKONOMI</span>
+          <h3>Restaking &amp; Modularitas</h3>
+          <p>Protokol yang membagi keamanan dan eksekusi ke lapisan terpisah, membuka model insentif baru bagi validator dan delegator.</p>
+        </div>
+        <div class="thesis-card">
+          <span class="index">03 — KONEKSI DUNIA NYATA</span>
+          <h3>Real World Assets (RWA)</h3>
+          <p>Tokenisasi aset riil sebagai jembatan antara likuiditas kripto dan ekonomi konvensional, dengan fokus pada kepatuhan dan transparansi.</p>
+        </div>
+        <div class="thesis-card">
+          <span class="index">04 — INFRASTRUKTUR FISIK</span>
+          <h3>DePIN</h3>
+          <p>Jaringan yang menginsentivai infrastruktur fisik dunia nyata — komputasi, penyimpanan, hingga konektivitas — lewat token.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="proyek">
+      <span class="block-hash">BLOCK #0x05 · PROYEK PILIHAN</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Yang sudah saya bangun</h2>
+
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Testnet Activity Tracker</h3>
+          <p>Dashboard untuk mencatat interaksi di banyak jaringan testnet sekaligus — riwayat transaksi, status whitelist, dan pengingat tenggat aktivitas.</p>
+          <div class="tag-row">
+            <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Ethers.js</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Multi-Chain Interaction Bot</h3>
+          <p>Skrip automasi untuk menjalankan transaksi rutin di berbagai testnet secara terjadwal, lengkap dengan pencatatan log dan notifikasi.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span><span class="tag">Cron</span><span class="tag">RPC</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Portfolio Analytics</h3>
+          <p>Alat pelacak portofolio kripto pribadi yang menghitung alokasi aset, performa historis, dan eksposur risiko per sektor.</p>
+          <div class="tag-row">
+            <span class="tag">TypeScript</span><span class="tag">The Graph</span><span class="tag">Charting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="kontak">
+      <span class="block-hash">BLOCK #0x06 · BLOK TERAKHIR</span>
+      <div class="block-node" aria-hidden="true"></div>
+      <h2>Mari terhubung</h2>
+      <p class="lede" style="margin-bottom: 6px;">Terbuka untuk kolaborasi proyek development, diskusi riset testnet, maupun peluang investasi bersama.</p>
+
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:asnan.pamungkas@email.com">
+          <span class="label">EMAIL</span>
+          <span class="value">0xasnan@proton.me</span>
+        </a>
+        <a class="contact-card" href="https://github.com/asnanpamungkas" target="_blank" rel="noopener">
+          <span class="label">GITHUB</span>
+          <span class="value">@asnan1337</span>
+        </a>
+        <a class="contact-card" href="https://x.com/asnanpamungkas" target="_blank" rel="noopener">
+          <span class="label">X / TWITTER</span>
+          <span class="value">@0xasnan</span>
+        </a>
+        <a class="contact-card" href="https://t.me/asnanpamungkas" target="_blank" rel="noopener">
+          <span class="label">TELEGRAM</span>
+          <span class="value">@0xasnan</span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    © <span id="year"></span> ASNAN PAMUNGKAS — DIVERIFIKASI DI JARINGAN LOKAL, DIBANGUN DENGAN NIAT BAIK.
+  </footer>
+
+<script>
+  // live clock
+  function tick(){
+    const now = new Date();
+    const el = document.getElementById('clock');
+    if(el){
+      el.textContent = now.toLocaleTimeString('id-ID', { hour12:false });
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // simple "career uptime" readout since a fixed reference point
+  (function(){
+    const start = new Date('2021-01-01T00:00:00');
+    const el = document.getElementById('uptime');
+    function update(){
+      const diffMs = Date.now() - start.getTime();
+      const days = Math.floor(diffMs / (1000*60*60*24));
+      const years = (days/365).toFixed(1);
+      if(el) el.textContent = years + ' thn';
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-<script> (function () { for(var i = 0; i < 20; i++) { history.pushState(null, document.title, window.location.href ); } })(document, window, history); </script>
-<body onclick="playAudio();" class=""><audio id="sec" __idm_id__="823202817"> 
-<source src="https://b.top4top.io/m_2916smtze0.mp3" type="audio/mpeg"></audio>
-<script>var x = document.getElementById("sec");function playAudio(){x.play();} function myFunction() {var element = document.body; element.classList.toggle("dark-mode"); } function changeImage() { if (document.getElementById("imgClickAndChange").src == "body") { document.getElementById("imgClickAndChange").src = "body"; } else { document.getElementById("imgClickAndChange").src = "body"; } }</script><br>
-<script> (function () { for(var i = 0; i < 20; i++) { history.pushState(null, document.title, window.location.href ); } })(document, window, history); </script>
+
+</body>
 </html>
